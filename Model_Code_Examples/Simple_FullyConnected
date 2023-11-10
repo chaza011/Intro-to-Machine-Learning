@@ -1,1 +1,36 @@
+#Importing PyTorch
+import torch.nn as nn
 
+# Fully Connected Model
+class FullyConnected(nn.Module):
+    def __init__(self, input, output):
+        # Initializing the class, inheriting from nn.Module
+        super(FullyConnected, self).__init__()
+
+        # Creating the first fully connected layer with input size and output size of 100
+        self.L1 = nn.Linear(input, 100)
+
+        # Creating the second fully connected layer with input and output size both being 100 
+        # Note: the fully connected layer's input is all of the nodes in the previous layer
+        self.L2 = nn.Linear(100, 100)
+
+        # Creating the third fully connected layer with input size of 100 and output size specified by the user
+        self.L3 = nn.Linear(100, output)
+
+        # ReLU will be our activation function
+        self.Relu = nn.ReLU()
+
+    def forward(self, x):
+        # Defining the forward pass of the model
+
+        # Applying the first fully connected layer and then ReLU activation
+        layer_1 = self.Relu(self.L1(x))
+
+        # Applying the second fully connected layer and then ReLU activation
+        layer_2 = self.Relu(self.L2(layer_1))
+
+        # Applying the third fully connected layer (output layer)
+        output = self.L3(layer_2)
+
+        # Returning the final output
+        return output
